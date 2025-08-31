@@ -1,12 +1,24 @@
-FROM python:3.10.8-slim-buster
+# Use a maintained Debian version
+FROM python:3.10-slim-bullseye  
 
-RUN apt update && apt upgrade -y
-RUN apt install git -y
-COPY requirements.txt /requirements.txt
+# Set working directory early
+WORKDIR /VJ-Forward-Bot  
 
-RUN cd /
-RUN pip3 install -U pip && pip3 install -U -r requirements.txt
-RUN mkdir /VJ-Forward-Bot
-WORKDIR /VJ-Forward-Bot
-COPY . /VJ-Forward-Bot
-CMD gunicorn app:app & python3 main.py
+# Install system dependencies (git, etc.)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+ && rm -rf /var/lib/apt/lists/*  
+
+# Upgrade pip & install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip \
+ && pip install --no-cache-dir -r requirements.txt  
+
+# Copy the rest of the code
+COPY . .  
+
+# Expose port if using gunicorn (e.g. 8000)
+EXPOSE 8000  
+
+# Run gunicorn + main.py
+CMD ["sh", "-c", "gunicorn app:app --bind 0.0.0.0:8000 & python3 main.py"]
