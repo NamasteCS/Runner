@@ -44,8 +44,8 @@ def clean_caption(text):
     # Remove raw URLs
     text = re.sub(r'https?://\S+', '', text)
 
-    # 🔥 Replace @mentions like @username with @PFP_HUB
-    text = re.sub(r'@[\w_]+', '@PFP_HUB', text)
+    # 🔥 Replace @mentions like @username with @II_LevelUP_II
+    text = re.sub(r'@[\w_]+', '@II_LevelUP_II', text)
 
     return text
 
@@ -485,7 +485,7 @@ async def send(bot, user, text):
 # Ask Doubt on telegram @KingVJ01
 
 def custom_caption(msg, caption):
-    default_caption = "<b><blockquote>🎀 @PFP_Hub 🎀</blockquote></b>"  # Your default caption if no caption exists
+    default_caption = "<b><blockquote>🎀 @II_LevelUP_II 🎀</blockquote></b>"  # Your default caption if no caption exists
 
     if msg.media:
         if (msg.video or msg.document or msg.audio or msg.photo):
