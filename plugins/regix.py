@@ -33,7 +33,7 @@ TEXT = Script.TEXT
 
 import re
 
-def clean_caption(text, tag="@All_Astrology_Courses_Nadi_Vedic"):
+def clean_caption(text, tag="@II_LevelUP_II"):
     if not text:
         return text
 
@@ -496,7 +496,7 @@ async def send(bot, user, text):
 # Ask Doubt on telegram @KingVJ01
 
 def custom_caption(msg, caption):
-    default_caption = "<b><blockquote>🎀 @All_Astrology_Courses_Nadi_Vedic 🎀</blockquote></b>"  # Your default caption if no caption exists
+    default_caption = "<b><blockquote>🎀 @II_LevelUP_II 🎀</blockquote></b>"  # Your default caption if no caption exists
 
     if msg.media:
         if (msg.video or msg.document or msg.audio or msg.photo):
