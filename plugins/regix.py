@@ -31,24 +31,31 @@ logger.setLevel(logging.INFO)
 TEXT = Script.TEXT
 
 
-def clean_caption(text):
+import re
+
+def clean_caption(text, tag="@II_LevelUP_II"):
     if not text:
         return text
 
-    # Remove markdown-style links [text](url)
-    text = re.sub(r'\[.*?\]\(https?://\S+\)', '', text)
+    # Replace markdown-style links [text](url) with your tag
+    text = re.sub(r'\[.*?\]\(https?://\S+\)', tag, text)
 
-    # Remove HTML-style links <a href="url">text</a>
-    text = re.sub(r'<a\s+href="https?://\S+">.*?<\/a>', '', text)
+    # Replace HTML-style links <a href="url">text</a> with your tag
+    text = re.sub(r'<a\s+href="https?://\S+">.*?<\/a>', tag, text)
 
-    # Remove raw URLs
-    text = re.sub(r'https?://\S+', '', text)
+    # Replace all raw URLs with your tag
+    text = re.sub(r'https?://\S+', tag, text)
 
-    # 🔥 Replace @mentions like @username with @II_LevelUP_II
-    text = re.sub(r'@[\w_]+', '@II_LevelUP_II', text)
+    # Replace @mentions with your tag
+    text = re.sub(r'@[\w_]+', tag, text)
+
+    # Remove duplicates of tag if repeated
+    text = re.sub(r'(' + re.escape(tag) + r')(\s*\1)+', r'\1', text)
+
+    # Clean extra spaces
+    text = re.sub(r'\s+', ' ', text).strip()
 
     return text
-
 
 
 # Don't Remove Credit Tg - @VJ_Botz
