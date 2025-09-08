@@ -31,8 +31,6 @@ logger.setLevel(logging.INFO)
 TEXT = Script.TEXT
 
 
-import re
-
 def clean_caption(text, tag="@II_LevelUP_II"):
     if not text:
         return text
@@ -43,8 +41,11 @@ def clean_caption(text, tag="@II_LevelUP_II"):
     # Replace HTML-style links <a href="url">text</a> with your tag
     text = re.sub(r'<a\s+href="https?://\S+">.*?<\/a>', tag, text)
 
-    # Replace all raw URLs with your tag
+    # Replace all raw URLs (http/https) with your tag
     text = re.sub(r'https?://\S+', tag, text)
+
+    # Replace bare domains like xyz.com, abc.shop, site.org, etc. with your tag
+    text = re.sub(r'\b[\w.-]+\.(com|net|org|info|shop|io|co|in|us|uk|biz|online|xyz|me|tv|app)\b', tag, text, flags=re.IGNORECASE)
 
     # Replace @mentions with your tag
     text = re.sub(r'@[\w_]+', tag, text)
@@ -56,7 +57,6 @@ def clean_caption(text, tag="@II_LevelUP_II"):
     text = re.sub(r'\s+', ' ', text).strip()
 
     return text
-
 
 # Don't Remove Credit Tg - @VJ_Botz
 # Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
